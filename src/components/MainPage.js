@@ -1,21 +1,21 @@
 import { useReducer,useEffect } from "react";
 import LockedPage from "./LockedPage.js";
 const Macros={
-    unlockTimeout:2000,//ms
+    unlockTimeout:1000,//ms
     LockedPage:"LockedPage",
-    MainPage:"MainPage",
+    MyPage:"MyPage",
 
 }
 const actions = {
-    ChangeToMainPage:"ChangeToMainPage",
+    ChangeToMainPage:"ChangeToMyPage",
 }
 const initialState={
     page:Macros.LockedPage,
 }
 const reducer = (state,action)=>{
     switch(action.type){
-        case actions.ChangeToMainPage:
-            return {page:Macros.MainPage};
+        case actions.ChangeToMyPage:
+            return {page:Macros.MyPage};
         default:
             return {page:Macros.LockedPage};
     }
@@ -28,9 +28,20 @@ export default function MainPage(){
     
     },[states.page])   
     
-    return(
-        (states.page===Macros.LockedPage)?
-            <LockedPage states={states} dispatch={dispatch} macros={Macros} actions={actions}/>
-        :null
-    );
+    let activePage = null;
+
+    switch(states.page){
+        case Macros.LockedPage:
+            activePage = <LockedPage states={states} dispatch={dispatch} macros={Macros} actions={actions}/>
+            break;
+        case Macros.MyPage:
+            activePage = <div className="temp center">Ola</div>
+            break;
+        default:
+            activePage = <div></div>
+            break;
+    }
+
+    return activePage
+
 }

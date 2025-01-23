@@ -36,7 +36,9 @@
     transform: rotate(360deg);
   }
 }
-
+::-webkit-scrollbar {
+  display: none;
+}
 .lockedpage {
   display: flex;
   flex-direction: row;
@@ -44,6 +46,7 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
+
 }
 .video-part {
   width: 100%;
@@ -51,43 +54,75 @@
   object-fit: cover;
   position: absolute;
   z-index: -5;
+  overflow: hidden;
 }
+
 
 .video-part.left {
   clip-path: inset(0 50% 0 0);
   left: 0;
+  translate: 0;
+  transition: translate 2s ease-out 0s;
+
 }
 
 .video-part.right {
   clip-path: inset(0 0 0 50%);
   right: 0;
+  translate: 0;
+  transition: translate 2s ease-out 0s;
 }
+
+.video-part.left.unlock{
+  translate: -100%;  
+}
+.video-part.right.unlock{
+  translate: 100%;    
+  
+}
+
+
 
 .rotating-button {
   position: float;
   border-radius: 50%;
-  transition-property: scale box-shadow opacity;
-  transition-duration: 0.5s;
+  background-color: #8A00C4;
+  transition-property: box-shadow opacity;
+  transition-duration: 0.8s;
   transition-timing-function: ease-out;
   align-content: center;
   justify-content: center;
   text-align: center;
   box-shadow: 0 0 0 0 #8A00C4;
-
+  opacity: 0.8;
 }
 .rotating-button:hover{
   box-shadow: 0 0 25px 20px #8A00C4;
 }
 .rotating-button.clicked{
-  scale: 200%;
+  box-shadow: 0 0 100px 100px #8A00C4;
   opacity: 0;
 }
-.rotating-button.clicked:hover{
-  box-shadow: 0 0 0 0
-}
-
 .fingerprint{
   width: 65%;
   height: 65%;
   object-fit: contain;
+  transition-property: scale box-shadow opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: ease-out;
+}
+.fingerprint.clicked{
+  scale: 200%;
+  opacity: 0;
+}
+.temp{
+  display: flex;
+  flex-direction: row;
+}
+.center {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
 }

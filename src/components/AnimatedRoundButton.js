@@ -12,12 +12,23 @@ export default function AnimatedRoundButton({props={}, notifier=null}){
         notifier();
     }
     
+    //This is a workaround for the button visual bug that the expanding animation affects the outter ring too instead of only the fingerprint
+    //Added an separate animation for fingerprint for expanding while the other animation for outter ring is independent.
     const {className,icon,...restProps} = props;
-    
+    const {props:iconProps,...restIcon} = icon;
+    const {className:iconClassName,...restIconProps} = iconProps;
+    const iconCopy = {
+        ...restIcon,
+        props: {
+            ...restIconProps,
+            className: click?iconClassName + " clicked":iconClassName
+        }
+    };
+
     //Add icon/img for button if theres any
     return(
         <div {...restProps} className={click?className+" clicked":className} onClick={onClickHandler}>
-            {icon}
+            {iconCopy}
         </div>
     );
 }

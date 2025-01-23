@@ -11,22 +11,22 @@ export default function LockedPage({state=null,dispatch=null,macros={},actions={
         style: { width: '9vw', height: '9vw' }
     };
     const unlockNotifier = ()=>{
-        //unlockAnimate(); buggy code here
+        unlockAnimate(); //buggy code here
         setTimeout(()=>{
-            dispatch({type:actions.ChangeToMainPage});
+            dispatch({type:actions.ChangeToMyPage});
         },macros.unlockTimeout);
     }
     const unlockAnimate = ()=>{
-        const leftVideo = document.getElementsByClassName("video-part left");
-        const rightVideo = document.getElementsByClassName("video-part right");
-        leftVideo.classList.add("unlock-left");
-        rightVideo.classList.add("unlock-right");
+        const leftVideo = document.getElementById("videoLeft");
+        const rightVideo = document.getElementById("videoRight");
+        leftVideo.classList.add("unlock");
+        rightVideo.classList.add("unlock");
     }
     return(
             <div className="lockedpage">
-                <video className="video-part left" loop autoPlay muted src={LockedPageVid}/>
+                <video id="videoLeft" className="video-part left" loop autoPlay muted src={LockedPageVid}/>
                     <AnimatedRoundButton props={buttonProps} notifier={unlockNotifier}/>
-                <video className="video-part right" loop autoPlay muted src={LockedPageVid} />
+                <video id="videoRight" className="video-part right" loop autoPlay muted src={LockedPageVid} />
             </div>
     );
 }
