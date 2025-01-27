@@ -1,10 +1,10 @@
 import { useReducer,useEffect } from "react";
 import LockedPage from "./LockedPage.js";
+import MyPage from "./MyPage.js";
 const Macros={
     unlockTimeout:1000,//ms
     LockedPage:"LockedPage",
     MyPage:"MyPage",
-
 }
 const actions = {
     ChangeToMainPage:"ChangeToMyPage",
@@ -35,7 +35,7 @@ export default function MainPage(){
             activePage = <LockedPage states={states} dispatch={dispatch} macros={Macros} actions={actions}/>
             break;
         case Macros.MyPage:
-            activePage = <div className="temp center">Ola</div>
+            activePage = <MyPage states={states} dispatch={dispatch} macros={Macros} actions={actions} animation={"fade-in"}/>
             break;
         default:
             activePage = <div></div>

@@ -46,14 +46,14 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
-
+  background-color: black;
 }
 .video-part {
   width: 100%;
   height: 100%;
   object-fit: cover;
   position: absolute;
-  z-index: -5;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -95,6 +95,7 @@
   text-align: center;
   box-shadow: 0 0 0 0 #8A00C4;
   opacity: 0.8;
+  z-index: 2;
 }
 .rotating-button:hover{
   box-shadow: 0 0 25px 20px #8A00C4;
@@ -125,4 +126,77 @@
   align-items: center;
   justify-items: center;
   text-align: center;
+}
+.mypage {
+  display: grid;
+  grid-template-columns: [leftCol] 0.15fr [leftMiddleCol] 0.85fr [rightCol] ;
+  grid-template-rows: [top] 0.05fr [middle] 0.95fr [bottom];
+  width: 100vw;
+  height: 100vh;
+  overflow:hidden;
+  gap: 0;
+}
+.scrollable-container.top{
+  flex-direction: row;
+  grid-area:top/leftCol/middle/rightCol;
+  background-color: #8A00C4;
+}
+.content-container{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+  grid-area: middle/leftMiddleCol/middleBottom/rightCol;
+  word-wrap: break-word;
+}
+.scrollable-container{
+  display: flex;
+  overflow-y: auto;
+  scrollbar-width: none;
+  align-content: center;
+  justify-items: center;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+.scrollable-container::-webkit-scrollbar {
+  display: none;
+}
+.scrollable-container.left{
+  flex-direction: column;
+  grid-area: middle / leftCol / bottom / leftMiddleCol;
+  height: 100%; /* Use 100% height to fit within the grid area */
+  background-color: aqua;
+  padding-top: 10vh;
+}
+.scrollable-container.bottom{
+  flex-direction: row;
+  grid-area: middleBottom / leftMiddleCol / bottom / rightCol;
+  background-color: greenyellow;
+}
+
+.no-list-default-style{
+  list-style-type: none;
+}
+.scrollable-bar-items{
+  transition: 0.25s ease-in;
+  scale: 100%;
+}
+.selected{
+  background-color: red;
+  scale:120%
+}
+
+.fade-in{
+  animation: fade-in 0.5s ease-in 1;
+}
+@keyframes fade-in{
+  0%{
+    scale: 1.2;
+    opacity: 0;
+  }
+  100%{
+    scale:1;
+    opacity:1;
+  }
 }
