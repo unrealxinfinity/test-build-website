@@ -292,6 +292,7 @@
   justify-content: center;
   height: 20vh; 
   gap:1em;  
+  
 }
 
 @supports(animation: slide-in-left 1s linear forwards){
@@ -312,6 +313,7 @@
   width: 30vh; 
   height: 30vh; 
   border-radius: 50%; 
+  box-shadow: 0 0 10px 10px grey;
 }
 #HobbiesandLikes{
   object-fit: cover;
@@ -322,8 +324,9 @@
     animation: zoom-in linear forwards;
     animation-timeline: view();
     animation-range: 100px 300px;
-    scale:200%;
-    opacity: 0;;
+    transform: scale(0);
+    opacity: 0;
+
   }
 }
 
@@ -334,7 +337,7 @@
 }
 @keyframes zoom-in{
   to{
-    scale: 100%;
+    transform: scale(1);
     opacity: 1;
   }
 }
