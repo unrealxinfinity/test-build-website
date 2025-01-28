@@ -11,7 +11,7 @@ export default function LockedPage({state=null,dispatch=null,macros={},actions={
         style: { width: '9vw', height: '9vw' }
     };
     const unlockNotifier = ()=>{
-        unlockAnimate(); //buggy code here
+        unlockAnimate();
         setTimeout(()=>{
             dispatch({type:actions.ChangeToMyPage});
         },macros.unlockTimeout);
@@ -21,6 +21,7 @@ export default function LockedPage({state=null,dispatch=null,macros={},actions={
         const rightVideo = document.getElementById("videoRight");
         leftVideo.classList.add("unlock");
         rightVideo.classList.add("unlock");
+        leftVideo.parentElement.classList.add("animate");
     }
     return(
             <div className="lockedpage">

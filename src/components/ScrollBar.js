@@ -1,7 +1,7 @@
 import { useState,useEffect,useRef} from "react";
 /**
  * React component that represents a scrollable vertical side bar with a list of labels/options. An example can be pictured as a timeline.
- * @param {*} options List of labels in the scrollable bar 
+ * @param {*} props Object with properties in the scrollable bar, that must include: list of labels(options),class list (className), content page reference (contentRef)
  * @returns React component
  */
 export default function ScrollBar({props = {}}){
@@ -25,10 +25,10 @@ export default function ScrollBar({props = {}}){
         const opsLen = ops.length;
         const sectionRange = Math.round(100/opsLen);
         const index = Math.floor(currPercentage / sectionRange);
-        if (index < 0) {
+        if (index <= 0) {
             return 0;
         }
-        else if(index >=opsLen){
+        else if(index >= opsLen || isNaN(index)){
             return opsLen-1;
         }
         return index;
@@ -57,22 +57,22 @@ export default function ScrollBar({props = {}}){
                 if(labelScrolled!==scrollLabel){
                     const prevLabel = optionsListRef.current.querySelector(`#${standardizedLastLabel}`);
                     if(prevLabel){
-                        prevLabel.classList.remove("selected");
+                        prevLabel.classList.remove("selected-white");
                     }
                     const selectedLabel = optionsListRef.current.querySelector(`#${standardizedCurrLabel}`);
                     if(selectedLabel){
-                        selectedLabel.classList.add("selected");
+                        selectedLabel.classList.add("selected-white");
+                        selectedLabel.scrollIntoView(
+                            {
+                                behavior: 'smooth',
+                                block: 'center',
+                                inline: 'center'
+                            }
+                        )
                     }
-                    selectedLabel.scrollIntoView(
-                        {
-                            behavior: 'smooth',
-                            block: 'center',
-                            inline: 'center'
-                        }
-                    )
                     setScrollLabel(labelScrolled);
-
                 }
+                
             
             
         }
@@ -80,6 +80,17 @@ export default function ScrollBar({props = {}}){
     const standardizeLabel = (label)=>{
         if(!label) return null;
         return "scrollbar"+label.split(" ").join("");
+    }
+    function clickHandler(index){
+        const { scrollTop, scrollHeight, clientHeight } = scrollableContainerRef.current;
+        const totalScrollableHeight = scrollHeight-clientHeight;
+        const sectionRange = totalScrollableHeight/ops.length;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+        scrollableContainerRef.current.scrollTo({
+            top: sectionRange*index, //index of the selected element * the section range to calculate where in the container the scroll pos is located
+            behavior: scrollBehavior // Ensure smooth scrolling
+        });
     }
     useEffect(()=>{
         const container = scrollableContainerRef.current
@@ -99,7 +110,7 @@ export default function ScrollBar({props = {}}){
         <ul ref={optionsListRef} {...restProps}>
             {ops.map((label,index)=>{
                 return(
-                    <li key={index} id={standardizeLabel(label)} className="scrollable-bar-items" style={{marginLeft:"40px",marginRight:"40px"}}>
+                    <li key={index} id={standardizeLabel(label)} className="scrollable-bar-items" onClick={()=>clickHandler(index)} style={{marginLeft:"40px",marginRight:"40px"}}>
                         {label}
                     </li>
                 )

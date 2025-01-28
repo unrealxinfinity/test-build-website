@@ -5,19 +5,26 @@ const Macros={
     unlockTimeout:1000,//ms
     LockedPage:"LockedPage",
     MyPage:"MyPage",
+    LightTheme:"Light",
+    DarkTheme:"Dark"
 }
 const actions = {
     ChangeToMainPage:"ChangeToMyPage",
+    ChangeTheme:"ChangeTheme"
 }
 const initialState={
     page:Macros.LockedPage,
+    theme:Macros.DarkTheme,
 }
 const reducer = (state,action)=>{
     switch(action.type){
         case actions.ChangeToMyPage:
-            return {page:Macros.MyPage};
+            return {...state,page:Macros.MyPage};
+        case actions.ChangeTheme:
+            console.log({...state,theme:(state.theme===Macros.LightTheme)?Macros.DarkTheme:Macros.LightTheme})
+            return {...state,theme:(state.theme===Macros.LightTheme)?Macros.DarkTheme:Macros.LightTheme}
         default:
-            return {page:Macros.LockedPage};
+            return {...state,page:Macros.LockedPage};
     }
 }
 
@@ -28,20 +35,20 @@ export default function MainPage(){
     
     },[states.page])   
     
-    let activePage = null;
 
-    switch(states.page){
-        case Macros.LockedPage:
-            activePage = <LockedPage states={states} dispatch={dispatch} macros={Macros} actions={actions}/>
-            break;
-        case Macros.MyPage:
-            activePage = <MyPage states={states} dispatch={dispatch} macros={Macros} actions={actions} animation={"fade-in"}/>
-            break;
-        default:
-            activePage = <div></div>
-            break;
-    }
-
-    return activePage
+    return (
+        <div className={states.theme===Macros.DarkTheme?"black":"white"}>
+            {(states.page===Macros.LockedPage)?
+            <LockedPage states={states} dispatch={dispatch} macros={Macros} actions={actions}/>
+            :
+            <></>
+            }
+            {(states.page===Macros.MyPage)?
+            <MyPage states={states} dispatch={dispatch} macros={Macros} actions={actions} animation={"fade-in"}/>
+            :
+            <></>}
+        </div>
+      
+    )
 
 }
