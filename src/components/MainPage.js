@@ -31,8 +31,9 @@ const reducer = (state,action)=>{
 export default function MainPage(){
    
     const [states,dispatch] = useReducer(reducer,initialState);
-    useEffect(()=>{
     
+    useEffect(()=>{
+       
     },[states.page])   
     
 
