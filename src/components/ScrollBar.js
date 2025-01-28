@@ -35,10 +35,10 @@ export default function ScrollBar({props = {}}){
     }
     //Adjusts the highlighted list item with the scroll of the content page
     const scrollHandler = ()=>{
+        //I need to change the scroll to work with the window instead.
         if (scrollableContainerRef.current){
-            const { scrollTop, scrollHeight, clientHeight } = scrollableContainerRef.current;
-            const totalScrollableHeight = scrollHeight-clientHeight;
-            
+            const scrollTop = window.scrollY;
+            const totalScrollableHeight = document.documentElement.scrollHeight;
             const scrolled = (scrollTop / totalScrollableHeight) * 100;
             let labelScrolledIndex = null;
             let labelScrolled = null;
@@ -93,13 +93,14 @@ export default function ScrollBar({props = {}}){
         });
     }
     useEffect(()=>{
-        const container = scrollableContainerRef.current
-        container.addEventListener("scroll",scrollHandler);
+        
+        window.addEventListener("scroll",scrollHandler);
         return ()=>{
-            container.removeEventListener("scroll",scrollHandler);
+            window.removeEventListener("scroll",scrollHandler);
         }
     });
-
+    
+    
     if(!options){
         alert("Necessary options propertie for the scrollBar");
         return <></>
