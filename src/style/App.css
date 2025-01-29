@@ -177,6 +177,7 @@
   justify-content: center;
   border-bottom-left-radius: 1.5em;
   border-bottom-right-radius: 1.5em;
+  box-shadow: 0 2px 10px 5px white;
   z-index: 1;
 }
 .grey{
@@ -212,19 +213,6 @@
 .scrollable-container::-webkit-scrollbar {
   display: none;
 }
-.scrollable-container.left{
-  flex-direction: column;
-  grid-area: middle / leftCol / bottom / leftMiddleCol;
-  height: 100%; /* Use 100% height to fit within the grid area */
-  background-color: aqua;
-  padding-top: 10vh;
-}
-.scrollable-container.bottom{
-  flex-direction: row;
-  grid-area: middleBottom / leftMiddleCol / bottom / rightCol;
-  background-color: greenyellow;
-}
-
 .no-list-default-style{
   list-style-type: none;
 }
@@ -290,7 +278,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 20vh; 
+  height: 20%; 
   gap:1em;  
   
 }
@@ -318,12 +306,12 @@
 #HobbiesandLikes{
   object-fit: cover;
 }
-@supports(animation: slide-in-left linear){
+@supports(animation: zoom-in linear){
   #HobbiesandLikes{
     object-fit: cover;
-    animation: zoom-in linear forwards;
+    animation: pop-in linear forwards;
     animation-timeline: view();
-    animation-range: 100px 300px;
+    animation-range: 250px 450px;
     transform: scale(0);
     opacity: 0;
 
@@ -335,7 +323,7 @@
     transform: translateX(0);
   }
 }
-@keyframes zoom-in{
+@keyframes pop-in{
   to{
     transform: scale(1);
     opacity: 1;

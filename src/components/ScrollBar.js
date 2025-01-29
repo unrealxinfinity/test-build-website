@@ -9,7 +9,6 @@ export default function ScrollBar({props = {}}){
 
     const ops= [...options];
     const [scrollLabel, setScrollLabel] = useState(null);
-    const scrollableContainerRef = contentRef;
     const optionsListRef = useRef(null);
 
 
@@ -22,10 +21,19 @@ export default function ScrollBar({props = {}}){
         let index = 0;
         props.standardizedoptions.forEach((sectionLabel,i)=>{
             const section = document.getElementById(sectionLabel);
+
+            let thisScrollBar = null;
+            let offset = null;
+            //Case the scrollbar is located at the top add some offset for the scrolling check
+            if(props.className.includes("top")){
+                thisScrollBar = document.getElementsByClassName(props.className)[0];
+                offset = thisScrollBar.offsetHeight?thisScrollBar.offsetHeight:0;
+            }
+    
+            
             if(section){
-                const rect = section.getBoundingClientRect();
-                if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-                    index = i;  
+                if(window.scrollY+offset>=section.offsetTop){
+                    index= i;
                 }
             }
         })
@@ -47,6 +55,8 @@ export default function ScrollBar({props = {}}){
             prevLabel.classList.remove("selected-white");
         }
         const selectedLabel = optionsListRef.current.querySelector(`#${standardizedCurrLabel}`);
+        //console.log("section checked:", options[labelScrolledIndex]," ",selectedLabel)
+
         if (selectedLabel) {
             selectedLabel.classList.add("selected-white");
             selectedLabel.scrollIntoView({
@@ -66,8 +76,16 @@ export default function ScrollBar({props = {}}){
     function clickHandler(index){
         const sectionLabelID = standardizedoptions[index];
         const section = document.getElementById(sectionLabelID);
+        let thisScrollBar = null;
+        let offset = null;
+        //Case the scrollbar is located at the top add some offset for the scrolling check
+        if(props.className.includes("top")){
+            thisScrollBar = document.getElementsByClassName(props.className)[0];
+            offset = thisScrollBar.offsetHeight?thisScrollBar.offsetHeight:0;
+        }     
         if(section){
-            section.scrollIntoView();
+            console.log("Section clicked:",section)
+            window.scrollTo({behavior:"smooth",top:section.offsetTop});
         }
     }
     useEffect(()=>{
