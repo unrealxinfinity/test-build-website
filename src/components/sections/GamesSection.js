@@ -5,6 +5,7 @@ import HSR from "../../assets/hsr.png";
 import HI3 from "../../assets/hi3.jpeg";
 import BackgroundVideo from "../../assets/miyabiWSound.mp4"
 import Arrow from "../../assets/arrowRight.png";
+import Mute from "../../assets/mute.png"
 import { useState,useEffect, useRef} from "react";
 
 
@@ -33,7 +34,10 @@ export default function GamesSection({states=null,Macros=null,id=null}){
           });
     }
     
-
+    const muteHandler =()=>{
+        const video = videoRef.current;
+        video.muted = !video.muted;
+    }
     
     const videoVolumeScrollHandler = ()=>{
 
@@ -43,7 +47,6 @@ export default function GamesSection({states=null,Macros=null,id=null}){
         const visibleHeight = Math.max(0, Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0));
         const percentageInView = (visibleHeight / rect.height);
         if(percentageInView){
-            video.muted=false;
             video.play();
             video.loop=true;
             video.volume = percentageInView/2;
@@ -51,6 +54,7 @@ export default function GamesSection({states=null,Macros=null,id=null}){
     }
 
     useEffect(()=>{
+        videoRef.current.muted=false;
         window.addEventListener("scroll",videoVolumeScrollHandler);
         return () => {
             window.removeEventListener("scroll", videoVolumeScrollHandler);
@@ -80,8 +84,12 @@ export default function GamesSection({states=null,Macros=null,id=null}){
 
     return(
             <section className={`games-section ${themeClass}`} id={id}>
+                <button className="mute-button" onClick={muteHandler}>
+                    <img src={Mute} alt="Mute icon"/>
+                </button>
             <h1 style={{textAlign:"center",fontSize:"2em",margin:"1em"}}>My Favourite Games</h1>
             <video className="video" src={BackgroundVideo} loop muted ref={videoRef} />
+            
             <div className="selectable-area">
                 <button className="select-button left" onClick={onClickLeft}>
                     <img src={Arrow} alt="Left Arrow" />

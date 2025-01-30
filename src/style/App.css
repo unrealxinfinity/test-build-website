@@ -259,8 +259,8 @@
   right:1em;
   bottom:1em;
   border-radius: 40em;
-  width:5vw;
-  height:5vw;
+  width:5em;
+  height:5em;
   box-shadow: 0 0 10px 3px;
   opacity: 0;
   animation:button-animation 0.5s ease-in forwards;
@@ -378,6 +378,8 @@
   grid-template-columns: [left] 0.1fr [leftMiddle] 0.8fr [rightMiddle] 0.1fr[right];
   grid-template-rows: [top] 30vh [bottom];
   gap:1em;
+  justify-content: center;
+  width: auto
 }
 .select-button.left{
   grid-area:top/left/bottom/leftMiddle;
@@ -420,6 +422,7 @@
   overflow-x: scroll;
   overflow-y: hidden;
   margin: 0;
+  padding: 0;
 }
 
 .gameIcons{
@@ -461,6 +464,21 @@
   position: absolute;
   z-index: -1;
   opacity:0.65;
+  width: 100%;
+  height: 100%;
+}
+.mute-button{
+  border-radius: 50%;
+  opacity: 0.75;
+  height: 3em;
+  width: 3em; 
+  position: absolute;
+  top:0;
+  right:0;
+  margin:3em;  
+}
+.mute-button img{
+  object-fit: contain;
   width: 100%;
   height: 100%;
 }
