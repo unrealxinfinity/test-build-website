@@ -29,7 +29,6 @@ export default function ScrollBar({props = {}}){
                 thisScrollBar = document.getElementsByClassName(props.className)[0];
                 offset = thisScrollBar.offsetHeight?thisScrollBar.offsetHeight:0;
             }
-    
             
             if(section){
                 if(window.scrollY+offset>=section.offsetTop){
@@ -55,7 +54,6 @@ export default function ScrollBar({props = {}}){
             prevLabel.classList.remove("selected-white");
         }
         const selectedLabel = optionsListRef.current.querySelector(`#${standardizedCurrLabel}`);
-        //console.log("section checked:", options[labelScrolledIndex]," ",selectedLabel)
 
         if (selectedLabel) {
             selectedLabel.classList.add("selected-white");
@@ -98,20 +96,22 @@ export default function ScrollBar({props = {}}){
     
     
     if(!options){
-        alert("Necessary options propertie for the scrollBar");
+        alert("Necessary options property for the scrollBar");
         return <></>
     };
 
 
     return(
-        <ul ref={optionsListRef} {...restProps}>
-            {ops.map((label,index)=>{
-                return(
-                    <li key={index} id={standardizeLabel(label)} className="scrollable-bar-items" onClick={()=>clickHandler(index)} style={{marginLeft:"40px",marginRight:"40px"}}>
-                        {label}
-                    </li>
-                )
-            })}
-        </ul>
+        <nav>
+            <ul ref={optionsListRef} {...restProps}>
+                {ops.map((label,index)=>{
+                    return(
+                        <li key={index} id={standardizeLabel(label)} className="scrollable-bar-items" onClick={()=>clickHandler(index)} style={{marginLeft:"40px",marginRight:"40px"}}>
+                            {label}
+                        </li>
+                    )
+                })}
+            </ul>
+        </nav>
     )
 }
