@@ -102,16 +102,14 @@ export default function ScrollBar({props = {}}){
 
 
     return(
-        <nav>
-            <ul ref={optionsListRef} {...restProps}>
-                {ops.map((label,index)=>{
-                    return(
-                        <li key={index} id={standardizeLabel(label)} className="scrollable-bar-items" onClick={()=>clickHandler(index)} style={{marginLeft:"40px",marginRight:"40px"}}>
-                            {label}
-                        </li>
-                    )
-                })}
-            </ul>
-        </nav>
+        <ul ref={optionsListRef} {...restProps}>
+            {ops.map((label,index)=>{
+                return(
+                    <li key={index} id={standardizeLabel(label)} className="scrollable-bar-items" onClick={()=>clickHandler(index)} >
+                        {label}
+                    </li>
+                )
+            })}
+        </ul>
     )
 }
